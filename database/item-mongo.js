@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 //Připojení k DB - connection string s přímým připojením do databáze s názvem UHK
-mongoose.connect('mongodb://localhost:27017/UHK', {
+mongoose.connect("mongodb://localhost:27017/UHK", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
 //Definice schématu (collection), která se při neexistenci vytvoří v připojené databázi
@@ -11,15 +11,15 @@ const Schema = mongoose.Schema;
 const itemSchema = new Schema({
   name: String,
   country: String,
-  year: Number
+  year: Number,
 });
 
-const ItemModel = mongoose.model('Item', itemSchema);
+const ItemModel = mongoose.model("Item", itemSchema);
 
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', function () {
-  console.log('Connected to MongoDB');
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", function () {
+  console.log("Connected to MongoDB");
 });
 
 class ItemMongo {
@@ -34,11 +34,11 @@ class ItemMongo {
 
   async updateItem(id, doc) {
     return ItemModel.findByIdAndUpdate(id, doc, {
-      new: true
+      new: true,
     });
   }
 
-  async getItem(id){
+  async getItem(id) {
     return ItemModel.findById(id);
   }
 
@@ -50,7 +50,6 @@ class ItemMongo {
   async deleteItem(id) {
     return ItemModel.findByIdAndDelete(id);
   }
-
 }
 
 module.exports = new ItemMongo();

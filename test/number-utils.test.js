@@ -1,6 +1,5 @@
 const isEven = require("../helpers/number-utils");
 describe("isEven test", () => {
-
   test("return true if number is even", () => {
     expect(isEven(2)).toBe(true);
   });

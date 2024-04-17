@@ -1,9 +1,7 @@
 const ItemMongo = require("../database/item-mongo");
 
 class ItemModel {
-
-  constructor() {
-  }
+  constructor() {}
 
   async createItem(doc) {
     //TODO místo pro logiku commandu - validace vstupů, business logika commandu, atp.

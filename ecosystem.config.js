@@ -5,7 +5,7 @@ module.exports = {
       script: "./bin/www",
       watch: ["./"],
       watch_delay: 400,
-      ignore_watch: ["node_modules"],
+      ignore_watch: ["node_modules", ".git"],
       wait_ready: true,
       shutdown_with_message: true,
       watch_options: {
