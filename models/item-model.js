@@ -1,17 +1,28 @@
 const ItemMongo = require("../database/item-mongo");
 const { isDate } = require("../helpers/type-util");
+const Validator = require("../validation/Validator");
+const {
+  createItemSchema,
+  listItemSchema,
+  updateItemSchema,
+  deleteItemSchema,
+} = require("../validation/item-valid");
 
 class ItemModel {
   constructor() {}
 
   async createItem(doc) {
-    // TODO: run validation
-    return await ItemMongo.createItem(doc);
+    // run validation
+    const validDoc = await Validator.validate(createItemSchema, doc);
+
+    return await ItemMongo.createItem(validDoc);
   }
 
   async updateItem(id, doc) {
-    // TODO: run validation
-    return await ItemMongo.updateItem(id, doc);
+    // run validation
+    const validDoc = await Validator.validate(updateItemSchema, { ...doc, id });
+
+    return await ItemMongo.updateItem(validDoc.id, validDoc);
   }
 
   async listItems(doc) {
@@ -54,13 +65,17 @@ class ItemModel {
     // get content filter rule
     if (Object.hasOwn(doc, "content")) docFilter.content = doc.content;
 
-    // TODO: run validation
-    return await ItemMongo.listItem(docFilter);
+    // run validation
+    const validDocFilter = await Validator.validate(listItemSchema, docFilter);
+
+    return await ItemMongo.listItem(validDocFilter);
   }
 
   async deleteItem(id) {
-    // TODO: run validation
-    return await ItemMongo.deleteItem(id);
+    // run validation
+    const validDoc = await Validator.validate(deleteItemSchema, { id });
+
+    return await ItemMongo.deleteItem(validDoc.id);
   }
 }
 
