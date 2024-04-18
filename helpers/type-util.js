@@ -1,5 +1,7 @@
 const isObject = (object) => {
-  typeof object === "object" && !Array.isArray(object) && object !== null;
+  return (
+    typeof object === "object" && !Array.isArray(object) && object !== null
+  );
 };
 
 const isDate = (date) => {

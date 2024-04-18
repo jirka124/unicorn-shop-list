@@ -18,14 +18,14 @@ const listItemSchema = Joi.object({
 });
 
 const updateItemSchema = Joi.object({
-  id: Joi.string().required(),
+  id: Joi.string().length(24).hex().required(),
   content: Joi.string(),
   count: Joi.number().min(0),
   state: Joi.string(),
 });
 
 const deleteItemSchema = Joi.object({
-  id: Joi.string().required(),
+  id: Joi.string().length(24).hex().required(),
 });
 
 module.exports = {
