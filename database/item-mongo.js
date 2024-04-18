@@ -9,9 +9,10 @@ mongoose.connect("mongodb://localhost:27017/UHK", {
 //Definice schématu (collection), která se při neexistenci vytvoří v připojené databázi
 const Schema = mongoose.Schema;
 const itemSchema = new Schema({
-  name: String,
-  country: String,
-  year: Number,
+  content: String,
+  count: Number,
+  state: String,
+  createdAt: Date,
 });
 
 const ItemModel = mongoose.model("Item", itemSchema);
@@ -24,11 +25,17 @@ db.once("open", function () {
 
 class ItemMongo {
   constructor() {
-    //prostor pro tvorbu indexu atp.
+    // init time and state
+    this.createdAt = new Date();
+    this.state = "INITIATED";
   }
 
   async createItem(doc) {
-    const item = new ItemModel(doc);
+    const item = new ItemModel({
+      ...doc,
+      createdAt: this.createdAt,
+      state: this.state,
+    });
     return await item.save();
   }
 
@@ -38,13 +45,8 @@ class ItemMongo {
     });
   }
 
-  async getItem(id) {
-    return ItemModel.findById(id);
-  }
-
-  async listItem() {
-    //prostor pro implementaci logiky listovani na zaklade atributu a aplikovani do mongo query
-    return ItemModel.find({});
+  async listItem(doc) {
+    return ItemModel.find(doc);
   }
 
   async deleteItem(id) {

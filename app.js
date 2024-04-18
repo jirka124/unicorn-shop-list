@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use("/stylesheets", express.static(path.join(__dirname, "stylesheets")));
 
 app.use("/", indexRouter);
-app.use("/item", itemsRouter);
+app.use("/shoppingItem", itemsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
